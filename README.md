@@ -77,7 +77,7 @@ Metrics:
 
 | Rule Set | Full file | Full lines | Full rules | Full size | Mini file | Mini lines | Mini rules | Mini size | Nano file | Nano lines | Nano rules | Nano size |
 | --- | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: | --- | ---: | ---: | ---: |
-| [A Philosophy of Software Design](a-philosophy-of-software-design/) | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 370 | 177 | 13561 B | [mini](a-philosophy-of-software-design/a-philosophy-of-software-design.mini.md) | 46 | 28 | 6232 B | [nano](a-philosophy-of-software-design/a-philosophy-of-software-design.nano.md) | 35 | 17 | 2258 B |
+| [A Philosophy of Software Design](a-philosophy-of-software-design/) | [full](a-philosophy-of-software-design/a-philosophy-of-software-design.md) | 370 | 177 | 13561 B | [mini](a-philosophy-of-software-design/a-philosophy-of-software-design.mini.md) | 46 | 28 | 6491 B | [nano](a-philosophy-of-software-design/a-philosophy-of-software-design.nano.md) | 35 | 17 | 2258 B |
 | [Clean Architecture](clean-architecture/) | [full](clean-architecture/clean-architecture.md) | 515 | 289 | 17782 B | [mini](clean-architecture/clean-architecture.mini.md) | 49 | 31 | 5486 B | [nano](clean-architecture/clean-architecture.nano.md) | 36 | 18 | 2254 B |
 | [Clean Code](clean-code/) | [full](clean-code/clean-code.md) | 297 | 220 | 13851 B | [mini](clean-code/clean-code.mini.md) | 47 | 29 | 4127 B | [nano](clean-code/clean-code.nano.md) | 32 | 14 | 1235 B |
 | [Code Complete](code-complete/) | [full](code-complete/code-complete.md) | 354 | 180 | 12407 B | [mini](code-complete/code-complete.mini.md) | 56 | 38 | 6717 B | [nano](code-complete/code-complete.nano.md) | 41 | 23 | 2544 B |
