@@ -13,7 +13,7 @@ Details are plugins to policy, not the center of the design.
 - Source dependencies point inward. Domain and use cases must not import frameworks, databases, web, UI, queues, service clients, device, vendor, or infrastructure details.
 - Entities guard enterprise invariants; focused use cases orchestrate application actions with plain input and output models.
 - Frameworks, databases, web delivery, messaging, filesystems, clocks, networks, services, and hardware stay out of core policy in the lightest form that does it: the edge does the I/O and passes values or a function in. Add a port and adapter only for a second implementation that exists now, a test that cannot be written without a substitute, or a real protocol or format.
-- Controllers, presenters, gateways, service listeners, mappers, and hardware adapters translate; they do not own business rules.
+- Controllers, presenters, gateways, service listeners, mappers, and hardware adapters translate; they do not own business rules. Checking the format of external input stays at the edge: the edge parses the input once, where it enters, builds domain values through the constructors that own the value rules, and reports the error.
 - Organize by use case, feature, or business capability. Avoid generic technical buckets, god services, shared utility escape hatches, and sideways coupling.
 - Choose the lightest enforceable boundary that preserves likely change independence; a service, package, diagram, or folder name is not enough.
 - Test policy through entities, use cases, and boundary contracts without real frameworks, databases, networks, services, or hardware.
