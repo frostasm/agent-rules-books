@@ -12,7 +12,7 @@ Details are plugins to policy, not the center of the design.
 
 - Source dependencies point inward. Domain and use cases must not import frameworks, databases, web, UI, queues, service clients, device, vendor, or infrastructure details.
 - Entities guard enterprise invariants; focused use cases orchestrate application actions with plain input and output models.
-- Frameworks, databases, web delivery, messaging, filesystems, clocks, networks, services, and hardware sit behind policy-owned ports and outer-layer adapters.
+- Frameworks, databases, web delivery, messaging, filesystems, clocks, networks, services, and hardware stay out of core policy in the lightest form that does it: the edge does the I/O and passes values or a function in. Add a port and adapter only for a second implementation that exists now, a test that cannot be written without a substitute, or a real protocol or format.
 - Controllers, presenters, gateways, service listeners, mappers, and hardware adapters translate; they do not own business rules.
 - Organize by use case, feature, or business capability. Avoid generic technical buckets, god services, shared utility escape hatches, and sideways coupling.
 - Choose the lightest enforceable boundary that preserves likely change independence; a service, package, diagram, or folder name is not enough.
@@ -22,7 +22,7 @@ Details are plugins to policy, not the center of the design.
 
 - When framework, ORM, request, response, schema, transport, config, vendor, or hardware types enter core policy, move translation outward.
 - When controllers, jobs, handlers, gateways, repositories, SQL, presenters, service listeners, or `*Service` classes grow business rules, move policy inward and split by use case.
-- When core code constructs or calls volatile details directly, define an inward-owned port and wire the concrete implementation at the edge.
+- When core code constructs or calls volatile details directly, move the call to the edge and pass its result in; define an inward-owned port, wired at the edge, only under the conditions for a port above.
 - When a shortcut bypasses a use case, crosses layers, creates a cycle, or hides coupling in `common` or `utils`, restore dependency direction and ownership.
 - When constraints force a compromise, keep it outermost, name the violation, and preserve a future path to separation.
 

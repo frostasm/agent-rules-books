@@ -44,9 +44,9 @@ Treat this file as a binding implementation policy: `MUST` is binding, `SHOULD` 
    - Presenters or response mappers translate use case output for delivery mechanisms.
 
 6. **Use Explicit Boundaries**
-   - Define interfaces at architectural seams.
-   - External systems, persistence, messaging, file systems, clocks, and service clients must sit behind boundaries.
-   - Prefer adapters over direct calls from policy code to implementation details.
+   - Keep external systems, persistence, messaging, file systems, clocks, and service clients out of policy code.
+   - Use the lightest form that does it: let the edge do the I/O and pass values into the core, or pass a function.
+   - Define an interface with adapters only when a second implementation exists now, a test cannot be written without a substitute, or the boundary hides a real protocol or format.
 
 7. **Organize by Use Case**
    - Prefer feature and use-case oriented structure over generic technical buckets.
@@ -162,10 +162,10 @@ For every non-trivial feature:
 - identify the use case
 - define the input
 - define the output
-- define required ports
+- define the ports that Non-Negotiable Rule 6 requires, if any
 - keep orchestration in one place
 
-Prefer this order:
+Prefer this order, skipping the steps the feature does not need:
 1. domain rule or entity behavior
 2. use case
 3. boundary interfaces
@@ -179,8 +179,8 @@ Prefer this order:
 - Do not pass database-bound entities, web requests, or framework-bound data structures into core logic.
 - Do not return framework objects from use cases.
 
-### 3. Create Ports for Volatile Dependencies
-Introduce interfaces for:
+### 3. Keep Volatile Dependencies Behind the Lightest Boundary
+Where Non-Negotiable Rule 6 requires a port, introduce interfaces for:
 - gateways
 - mailers
 - payment providers
@@ -203,7 +203,7 @@ Do not call volatile details directly from core use cases.
 - Avoid shared "common" packages that create sideways coupling.
 
 ### 6. Keep Boundaries Visible
-- When in doubt, introduce a boundary sooner.
+- When in doubt, keep the call at the edge and pass its result in; introduce a boundary when Non-Negotiable Rule 6 requires it.
 - Partial boundaries are acceptable if they preserve future extraction options.
 - Use interfaces, request models, and output models to avoid coupling to details.
 
@@ -394,10 +394,10 @@ When modifying existing code:
    - Extract domain logic from controllers, handlers, views, gateway classes, and jobs.
 
 2. **Introduce boundaries around details**
-   - Wrap external services, database access, message buses, filesystem operations, and clocks.
+   - Move calls to external services, database access, message buses, filesystem operations, and clocks to the edge; wrap them only where Non-Negotiable Rule 6 requires an interface.
 
 3. **Replace concrete dependencies with ports**
-   - Define interfaces in inner layers.
+   - Where Non-Negotiable Rule 6 requires a port, define interfaces in inner layers.
    - Implement them in outer layers.
 
 4. **Separate translation from policy**
@@ -418,12 +418,12 @@ When modifying existing code:
 
 ## Output Expectations
 
-When asked to implement a feature, default to producing:
+When asked to implement a feature, produce only what the feature needs:
 - a domain model or entity if business invariants exist
 - a focused use case
 - input and output models if needed
-- ports/interfaces for external dependencies
-- adapters for web, persistence, or messaging details
+- ports/interfaces for external dependencies where Non-Negotiable Rule 6 requires them
+- adapters for web, persistence, or messaging details that have a port
 - composition root wiring outside the use case
 
 When asked to modify existing code:
@@ -465,7 +465,7 @@ If any answer is no, revise the design before shipping.
 
 ## Preferred Default Shapes
 
-### Preferred feature shape
+### Preferred feature shape (when the system has several delivery mechanisms or data stores)
 - domain
 - application
 - adapters
@@ -481,7 +481,7 @@ Or, if feature-oriented:
 - request model
 - use case
 - output boundary or response model
-- ports
+- ports that Non-Negotiable Rule 6 requires
 - adapter implementations outside
 
 ### Preferred dependency pattern
