@@ -358,7 +358,7 @@ The rule:
 
 > Do not define away bad external input: where it enters, check it once against the documented format and limits and reject what fails with a clear error; never silently clamp, truncate, default, skip, or repair it.
 
-With this rule the agent rejects everything the description of the format does not allow, harmless noise included: spaces around a value, empty lines, a byte order mark at the start of a file. If a format of your project must tolerate such noise, say so in the description of that format. An example:
+With this rule the agent rejects what the description of the format does not allow, harmless noise included: in our checks spaces around a number and empty lines were rejected in every run. Where the description says nothing, the answer still depends on the model: a byte order mark at the start of the file was accepted in half of the runs. If a format of your project must tolerate such noise, or must not, say so in the description of that format. An example:
 
 ```markdown
 ## Input file
