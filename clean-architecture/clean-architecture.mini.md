@@ -29,7 +29,7 @@ Do not let details become the architecture. Business policy stays independent, d
 
 - When urgent delivery would skip architecture, state the future change, test, replacement, or operational cost before accepting the shortcut.
 - When framework annotations, request/response objects, serializers, ORM rows, schemas, vendor SDKs, config, environment reads, device registers, or transport formats enter core policy, move translation outward.
-- When controllers, jobs, handlers, views, presenters, gateways, repositories, SQL, service listeners, scripts, or hardware adapters contain business branching or validation, move the rule inward.
+- When controllers, jobs, handlers, views, presenters, gateways, repositories, SQL, service listeners, scripts, or hardware adapters contain business branching or checks of business rules, move the rule inward. Checking the format of external input stays at the edge: the edge parses the input once, where it enters, builds domain values through the constructors that own the value rules, and reports the error.
 - When a use case instantiates infrastructure, calls a volatile dependency directly, or depends on a concrete implementation, first move the call to the edge and pass its result in; introduce a policy-owned port, wired at the edge, only under the conditions for a port above.
 - When a `*Service`, utility folder, shared module, base package, or generic `core` package becomes an escape hatch, split by use case, role, or ownership and restore dependency direction.
 - When an adapter bypasses a use case, a presenter reads persistence directly, or infrastructure is both imported by and importing inward code, restore the intended boundary.
