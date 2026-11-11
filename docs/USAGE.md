@@ -352,6 +352,39 @@ the event loop, and the GUI, network and SQL modules.
 
 Without such a list the agent decides case by case whether a type counts as a framework. Keep the list in the project's rules file and leave the rule as it is: in our checks a general exception written into the rule itself made agents treat every type the project had not named as a framework.
 
+### A Philosophy of Software Design: noise in external input
+
+The rule:
+
+> Do not define away bad external input: where it enters, check it once against the documented format and limits and reject what fails with a clear error; never silently clamp, truncate, default, skip, or repair it.
+
+With this rule the agent rejects everything the description of the format does not allow, harmless noise included: spaces around a value, empty lines, a byte order mark at the start of a file. If a format of your project must tolerate such noise, say so in the description of that format. An example:
+
+```markdown
+## Input file
+
+- UTF-8; a byte order mark at the start of the file is ignored.
+- White space around a field is ignored; an empty line is skipped.
+- Anything else that does not match the format is an error.
+```
+
+Without it the strictness is the default, and that is intended: what the format tolerates is a decision of the project, not of the agent.
+
+### A Philosophy of Software Design: style of documentation comments
+
+The rule:
+
+> Interface comments, in the language's documentation form on the declaration, state what callers need: contract, units, preconditions, errors, side effects, thread-safety.
+
+The rule says where each kind of comment goes, not which documentation syntax to use. In our checks C++ interface comments came as `///` lines, as `/** */` blocks, or as a mix of both in one file. Name the style in the project's rules file. An example:
+
+```markdown
+## Documentation comments
+
+- C++: Doxygen blocks `/** ... */` on the declaration in the header, with `@param`, `@return` and `@throws`.
+- Python: docstrings in the Google style.
+```
+
 ## Decision Guide
 
 - Need a task-specific book bias: create or invoke a skill from the relevant `mini` rule set.
