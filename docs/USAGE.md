@@ -323,6 +323,35 @@ Suggested split:
 - treating root `AGENTS.md` as the best default for complex projects
 - storing large reference packs in project rules when indexed docs are a better fit
 
+## Rules That Need Project Input
+
+Some rules depend on a fact that only the project knows. State that fact in the project's own rules file (`AGENTS.md`, `CLAUDE.md`), next to the place where the rule set is loaded. Do not edit the rule set for it.
+
+### Clean Architecture: types that are native to the core
+
+The rule:
+
+> Domain and use cases must not import frameworks, databases, web handlers, queues, external service clients, UI types, or other details.
+
+A project built on a platform or a library usually treats some of its types as the plain vocabulary of the core: the value types of Qt in a Qt application, or Pydantic models in a Python service. Name these types or modules in the project's rules file, and say what stays outside the core. An example for a Qt project:
+
+```markdown
+## Project vocabulary
+
+Qt is the platform this project is built on. These Qt Core value types are the project's vocabulary: they are not
+a framework in the sense of the coding rules, and the business rules use them for text, dates and collections.
+
+- `QString`, `QStringView`, `QChar`
+- `QByteArray`
+- `QDate`, `QTime`, `QDateTime`
+- `QList`, `QHash`, `QMap`, `QSet`
+
+Everything else in Qt is not vocabulary: command-line parsing, streams and files, JSON, the application object and
+the event loop, and the GUI, network and SQL modules.
+```
+
+Without such a list the agent decides case by case whether a type counts as a framework. Keep the list in the project's rules file and leave the rule as it is: in our checks a general exception written into the rule itself made agents treat every type the project had not named as a framework.
+
 ## Decision Guide
 
 - Need a task-specific book bias: create or invoke a skill from the relevant `mini` rule set.
